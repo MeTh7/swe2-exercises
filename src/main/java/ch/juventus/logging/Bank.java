@@ -1,11 +1,32 @@
 package ch.juventus.logging;
 
-//1.) Klasse "Bank" erstellt, die für alle sichtbar ist > public
-//2.) Variable mit Name "balance" erstellt und auf 0 gesetzt (Startwert)
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Bank {
-    private double balance = 0;
-  // Methode erstellt zur Addition von beliebigem Betrag
-    public void deposit(double amount){
-      balance=balance+amount;
+    final Logger logger = LoggerFactory.getLogger(Bank.class);
+    private float balance;
+
+    public float retrieveBalance() {
+        logger.debug("balance retrieved: {}", balance);
+        return balance;
+    }
+
+    public void withdraw(float amount) {
+        logger.debug("withdrawed amount: {}", amount);
+        balance -= amount;
+        if(balance < 0)
+        {
+            logger.warn("Balance is negative");
+        }
+    }
+
+    public void deposit(float amount) {
+        logger.debug("deposited amount: {}", amount);
+        balance += amount;
+        if(balance > 20)
+        {
+            logger.info("You can buy a lunch now!");
+        }
     }
 }
